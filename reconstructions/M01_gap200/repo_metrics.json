@@ -1,0 +1,20 @@
+{
+    "file": "/content/drive/MyDrive/DPAI_real_baseline/dataset/clean/M01.wav",
+    "epochs": 5000,
+    "lowest_training_loss": 0.3301725685596466,
+    "last_training_loss": 0.38711485266685486,
+    "lowest_validation_loss": 0.12244253605604172,
+    "last_validation_loss": 0.13135381042957306,
+    "nmse_spectrogram": -19.644216885922532,
+    "nmse_audio": -21.48245973596419,
+    "nmse_audio_masked_part": -10.783049106775142,
+    "nmse_audio_with_original_context": -27.780289186521053,
+    "nmse_audio_masked_part_with_original_context": -27.780289186521053,
+    "pesq_before": 4.076507091522217,
+    "pesq_after": 4.037380695343018,
+    "elapsed_time": "0:34:39",
+    "alpha": 1.0,
+    "beta": 1.0,
+    "gamma": 1.0,
+    "delta": 1.0
+}

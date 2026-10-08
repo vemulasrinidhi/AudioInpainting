@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment and local tooling
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Large generated files that should not be accidentally committed
+*.tmp
+*.swp
+*.swo

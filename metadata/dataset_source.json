@@ -1,0 +1,13 @@
+{
+ "dataset": "MUSAN",
+ "openslr_id": "SLR17",
+ "landing_page": "https://www.openslr.org/17/",
+ "license": "CC BY 4.0 (per-file licences in LICENSE files)",
+ "url_used": "https://openslr.trmal.net/resources/17/musan.tar.gz",
+ "archive_bytes": 11086114085,
+ "md5_published": "0c472d4fc0c5141eca47ad1ffeb2a7df",
+ "md5": "0c472d4fc0c5141eca47ad1ffeb2a7df",
+ "sha256": "86d1061c7e15b5c9e906777685c519701df51bfde3001e1070dcc9ffac955ee1",
+ "downloaded": "2026-10-04T11:06:27",
+ "citation": "D. Snyder, G. Chen, D. Povey, MUSAN: A Music, Speech, and Noise Corpus, arXiv:1510.08484, 2015"
+}

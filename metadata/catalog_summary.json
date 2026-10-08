@@ -1,0 +1,11 @@
+{
+ "files": 1086,
+ "per_source": "{('music', 'fma'): 128, ('music', 'fma-western-art'): 93, ('music', 'hd-classical'): 75, ('music', 'jamendo'): 217, ('music', 'rfm'): 147, ('speech', 'librivox'): 173, ('speech', 'us-gov'): 253}",
+ "hours": 103.1,
+ "sample_rates": [
+  16000
+ ],
+ "channels": [
+  1
+ ]
+}

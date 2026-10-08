@@ -1,0 +1,261 @@
+running build_ext
+building 'interp_same' extension
+creating build/temp.linux-x86_64-cpython-313/csrc
+x86_64-linux-gnu-g++ -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O2 -Wall -g -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -g -fwrapv -O2 -fPIC -I/usr/local/lib/python3.13/dist-packages/torch/include -I/usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/api/include -I/usr/local/cuda/include -I/usr/include/python3.13 -c ./csrc/interp_same_size.cpp -o build/temp.linux-x86_64-cpython-313/csrc/interp_same_size.o -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=interp_same -std=c++17
+/usr/local/cuda/bin/nvcc -I/usr/local/lib/python3.13/dist-packages/torch/include -I/usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/api/include -I/usr/local/cuda/include -I/usr/include/python3.13 -c ./csrc/interp_same_size_kernel.cu -o build/temp.linux-x86_64-cpython-313/csrc/interp_same_size_kernel.o -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options '-fPIC' -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=interp_same -gencode=arch=compute_75,code=sm_75 -std=c++17
+creating build/lib.linux-x86_64-cpython-313
+x86_64-linux-gnu-g++ -fno-strict-overflow -Wsign-compare -DNDEBUG -g -O2 -Wall -g -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -g -fwrapv -O2 -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -g -fwrapv -O2 build/temp.linux-x86_64-cpython-313/csrc/interp_same_size.o build/temp.linux-x86_64-cpython-313/csrc/interp_same_size_kernel.o -L/usr/local/lib/python3.13/dist-packages/torch/lib -L/usr/local/cuda/lib64 -L/usr/lib/x86_64-linux-gnu -lc10 -ltorch -ltorch_cpu -ltorch_python -lcudart -lc10_cuda -ltorch_cuda -o build/lib.linux-x86_64-cpython-313/interp_same.cpython-313-x86_64-linux-gnu.so
+copying build/lib.linux-x86_64-cpython-313/interp_same.cpython-313-x86_64-linux-gnu.so -> 
+W1004 15:29:01.763000 3564 torch/utils/cpp_extension.py:680] Attempted to use ninja as the BuildExtension backend but we could not find ninja.. Falling back to using the slow distutils backend.
+In file included from /usr/local/lib/python3.13/dist-packages/torch/include/c10/core/Device.h:6,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:12,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/Tensor.h:4,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/ATen/Tensor.h:4,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/autograd/function_hook.h:4,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/autograd/cpp_hook.h:3,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/autograd/variable.h:7,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/autograd/autograd.h:4,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/api/include/torch/autograd.h:4,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/torch/csrc/api/include/torch/all.h:8,
+                 from /usr/local/lib/python3.13/dist-packages/torch/include/torch/extension.h:6,
+                 from ./csrc/interp_same_size.cpp:1:
+./csrc/interp_same_size.cpp: In function ‘void interp_affine_out(at::Tensor, at::Tensor, at::Tensor, at::Tensor, int, int)’:
+./csrc/interp_same_size.cpp:23:40: warning: ‘at::DeprecatedTypeProperties& at::Tensor::type() const’ is deprecated: Tensor.type() is deprecated. Instead use Tensor.options(), which in many cases (e.g. in a constructor) is a drop-in replacement. If you were using data from type(), that is now available from Tensor itself, so instead of tensor.type().scalar_type(), use tensor.scalar_type() instead and instead of tensor.type().backend() use tensor.device(). [-Wdeprecated-declarations]
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                                        ^
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:374:39: note: in definition of macro ‘C10_EXPAND_MSVC_WORKAROUND’
+  374 | #define C10_EXPAND_MSVC_WORKAROUND(x) x
+      |                                       ^
+/usr/local/lib/python3.13/dist-packages/torch/include/torch/headeronly/util/Exception.h:28:34: note: in expansion of macro ‘C10_UNLIKELY’
+   28 | #define C10_UNLIKELY_OR_CONST(e) C10_UNLIKELY(e)
+      |                                  ^~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:431:7: note: in expansion of macro ‘C10_UNLIKELY_OR_CONST’
+  431 |   if (C10_UNLIKELY_OR_CONST(!(cond))) {                                          \
+      |       ^~~~~~~~~~~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:862:32: note: in expansion of macro ‘TORCH_INTERNAL_ASSERT’
+  862 |     C10_EXPAND_MSVC_WORKAROUND(TORCH_INTERNAL_ASSERT(cond, __VA_ARGS__)); \
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+./csrc/interp_same_size.cpp:23:23: note: in expansion of macro ‘AT_ASSERTM’
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                       ^~~~~~~~~~
+./csrc/interp_same_size.cpp:25:24: note: in expansion of macro ‘CHECK_CUDA’
+   25 | #define CHECK_INPUT(x) CHECK_CUDA(x); CHECK_CONTIGUOUS(x)
+      |                        ^~~~~~~~~~
+./csrc/interp_same_size.cpp:35:3: note: in expansion of macro ‘CHECK_INPUT’
+   35 |   CHECK_INPUT(input);
+      |   ^~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:231:30: note: declared here
+  231 |   DeprecatedTypeProperties & type() const {
+      |                              ^~~~
+./csrc/interp_same_size.cpp:23:40: warning: ‘at::DeprecatedTypeProperties& at::Tensor::type() const’ is deprecated: Tensor.type() is deprecated. Instead use Tensor.options(), which in many cases (e.g. in a constructor) is a drop-in replacement. If you were using data from type(), that is now available from Tensor itself, so instead of tensor.type().scalar_type(), use tensor.scalar_type() instead and instead of tensor.type().backend() use tensor.device(). [-Wdeprecated-declarations]
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                                        ^
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:374:39: note: in definition of macro ‘C10_EXPAND_MSVC_WORKAROUND’
+  374 | #define C10_EXPAND_MSVC_WORKAROUND(x) x
+      |                                       ^
+/usr/local/lib/python3.13/dist-packages/torch/include/torch/headeronly/util/Exception.h:28:34: note: in expansion of macro ‘C10_UNLIKELY’
+   28 | #define C10_UNLIKELY_OR_CONST(e) C10_UNLIKELY(e)
+      |                                  ^~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:431:7: note: in expansion of macro ‘C10_UNLIKELY_OR_CONST’
+  431 |   if (C10_UNLIKELY_OR_CONST(!(cond))) {                                          \
+      |       ^~~~~~~~~~~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:862:32: note: in expansion of macro ‘TORCH_INTERNAL_ASSERT’
+  862 |     C10_EXPAND_MSVC_WORKAROUND(TORCH_INTERNAL_ASSERT(cond, __VA_ARGS__)); \
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+./csrc/interp_same_size.cpp:23:23: note: in expansion of macro ‘AT_ASSERTM’
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                       ^~~~~~~~~~
+./csrc/interp_same_size.cpp:25:24: note: in expansion of macro ‘CHECK_CUDA’
+   25 | #define CHECK_INPUT(x) CHECK_CUDA(x); CHECK_CONTIGUOUS(x)
+      |                        ^~~~~~~~~~
+./csrc/interp_same_size.cpp:36:3: note: in expansion of macro ‘CHECK_INPUT’
+   36 |   CHECK_INPUT(output);
+      |   ^~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:231:30: note: declared here
+  231 |   DeprecatedTypeProperties & type() const {
+      |                              ^~~~
+./csrc/interp_same_size.cpp:23:40: warning: ‘at::DeprecatedTypeProperties& at::Tensor::type() const’ is deprecated: Tensor.type() is deprecated. Instead use Tensor.options(), which in many cases (e.g. in a constructor) is a drop-in replacement. If you were using data from type(), that is now available from Tensor itself, so instead of tensor.type().scalar_type(), use tensor.scalar_type() instead and instead of tensor.type().backend() use tensor.device(). [-Wdeprecated-declarations]
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                                        ^
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:374:39: note: in definition of macro ‘C10_EXPAND_MSVC_WORKAROUND’
+  374 | #define C10_EXPAND_MSVC_WORKAROUND(x) x
+      |                                       ^
+/usr/local/lib/python3.13/dist-packages/torch/include/torch/headeronly/util/Exception.h:28:34: note: in expansion of macro ‘C10_UNLIKELY’
+   28 | #define C10_UNLIKELY_OR_CONST(e) C10_UNLIKELY(e)
+      |                                  ^~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:431:7: note: in expansion of macro ‘C10_UNLIKELY_OR_CONST’
+  431 |   if (C10_UNLIKELY_OR_CONST(!(cond))) {                                          \
+      |       ^~~~~~~~~~~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:862:32: note: in expansion of macro ‘TORCH_INTERNAL_ASSERT’
+  862 |     C10_EXPAND_MSVC_WORKAROUND(TORCH_INTERNAL_ASSERT(cond, __VA_ARGS__)); \
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+./csrc/interp_same_size.cpp:23:23: note: in expansion of macro ‘AT_ASSERTM’
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                       ^~~~~~~~~~
+./csrc/interp_same_size.cpp:25:24: note: in expansion of macro ‘CHECK_CUDA’
+   25 | #define CHECK_INPUT(x) CHECK_CUDA(x); CHECK_CONTIGUOUS(x)
+      |                        ^~~~~~~~~~
+./csrc/interp_same_size.cpp:37:3: note: in expansion of macro ‘CHECK_INPUT’
+   37 |   CHECK_INPUT(indexes);
+      |   ^~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:231:30: note: declared here
+  231 |   DeprecatedTypeProperties & type() const {
+      |                              ^~~~
+./csrc/interp_same_size.cpp:23:40: warning: ‘at::DeprecatedTypeProperties& at::Tensor::type() const’ is deprecated: Tensor.type() is deprecated. Instead use Tensor.options(), which in many cases (e.g. in a constructor) is a drop-in replacement. If you were using data from type(), that is now available from Tensor itself, so instead of tensor.type().scalar_type(), use tensor.scalar_type() instead and instead of tensor.type().backend() use tensor.device(). [-Wdeprecated-declarations]
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                                        ^
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:374:39: note: in definition of macro ‘C10_EXPAND_MSVC_WORKAROUND’
+  374 | #define C10_EXPAND_MSVC_WORKAROUND(x) x
+      |                                       ^
+/usr/local/lib/python3.13/dist-packages/torch/include/torch/headeronly/util/Exception.h:28:34: note: in expansion of macro ‘C10_UNLIKELY’
+   28 | #define C10_UNLIKELY_OR_CONST(e) C10_UNLIKELY(e)
+      |                                  ^~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:431:7: note: in expansion of macro ‘C10_UNLIKELY_OR_CONST’
+  431 |   if (C10_UNLIKELY_OR_CONST(!(cond))) {                                          \
+      |       ^~~~~~~~~~~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:862:32: note: in expansion of macro ‘TORCH_INTERNAL_ASSERT’
+  862 |     C10_EXPAND_MSVC_WORKAROUND(TORCH_INTERNAL_ASSERT(cond, __VA_ARGS__)); \
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+./csrc/interp_same_size.cpp:23:23: note: in expansion of macro ‘AT_ASSERTM’
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                       ^~~~~~~~~~
+./csrc/interp_same_size.cpp:25:24: note: in expansion of macro ‘CHECK_CUDA’
+   25 | #define CHECK_INPUT(x) CHECK_CUDA(x); CHECK_CONTIGUOUS(x)
+      |                        ^~~~~~~~~~
+./csrc/interp_same_size.cpp:38:3: note: in expansion of macro ‘CHECK_INPUT’
+   38 |   CHECK_INPUT(weights);
+      |   ^~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:231:30: note: declared here
+  231 |   DeprecatedTypeProperties & type() const {
+      |                              ^~~~
+./csrc/interp_same_size.cpp: In function ‘void interp_shift_out(at::Tensor, at::Tensor, float)’:
+./csrc/interp_same_size.cpp:23:40: warning: ‘at::DeprecatedTypeProperties& at::Tensor::type() const’ is deprecated: Tensor.type() is deprecated. Instead use Tensor.options(), which in many cases (e.g. in a constructor) is a drop-in replacement. If you were using data from type(), that is now available from Tensor itself, so instead of tensor.type().scalar_type(), use tensor.scalar_type() instead and instead of tensor.type().backend() use tensor.device(). [-Wdeprecated-declarations]
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                                        ^
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:374:39: note: in definition of macro ‘C10_EXPAND_MSVC_WORKAROUND’
+  374 | #define C10_EXPAND_MSVC_WORKAROUND(x) x
+      |                                       ^
+/usr/local/lib/python3.13/dist-packages/torch/include/torch/headeronly/util/Exception.h:28:34: note: in expansion of macro ‘C10_UNLIKELY’
+   28 | #define C10_UNLIKELY_OR_CONST(e) C10_UNLIKELY(e)
+      |                                  ^~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:431:7: note: in expansion of macro ‘C10_UNLIKELY_OR_CONST’
+  431 |   if (C10_UNLIKELY_OR_CONST(!(cond))) {                                          \
+      |       ^~~~~~~~~~~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:862:32: note: in expansion of macro ‘TORCH_INTERNAL_ASSERT’
+  862 |     C10_EXPAND_MSVC_WORKAROUND(TORCH_INTERNAL_ASSERT(cond, __VA_ARGS__)); \
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+./csrc/interp_same_size.cpp:23:23: note: in expansion of macro ‘AT_ASSERTM’
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                       ^~~~~~~~~~
+./csrc/interp_same_size.cpp:25:24: note: in expansion of macro ‘CHECK_CUDA’
+   25 | #define CHECK_INPUT(x) CHECK_CUDA(x); CHECK_CONTIGUOUS(x)
+      |                        ^~~~~~~~~~
+./csrc/interp_same_size.cpp:49:3: note: in expansion of macro ‘CHECK_INPUT’
+   49 |   CHECK_INPUT(input);
+      |   ^~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:231:30: note: declared here
+  231 |   DeprecatedTypeProperties & type() const {
+      |                              ^~~~
+./csrc/interp_same_size.cpp:23:40: warning: ‘at::DeprecatedTypeProperties& at::Tensor::type() const’ is deprecated: Tensor.type() is deprecated. Instead use Tensor.options(), which in many cases (e.g. in a constructor) is a drop-in replacement. If you were using data from type(), that is now available from Tensor itself, so instead of tensor.type().scalar_type(), use tensor.scalar_type() instead and instead of tensor.type().backend() use tensor.device(). [-Wdeprecated-declarations]
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                                        ^
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:374:39: note: in definition of macro ‘C10_EXPAND_MSVC_WORKAROUND’
+  374 | #define C10_EXPAND_MSVC_WORKAROUND(x) x
+      |                                       ^
+/usr/local/lib/python3.13/dist-packages/torch/include/torch/headeronly/util/Exception.h:28:34: note: in expansion of macro ‘C10_UNLIKELY’
+   28 | #define C10_UNLIKELY_OR_CONST(e) C10_UNLIKELY(e)
+      |                                  ^~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:431:7: note: in expansion of macro ‘C10_UNLIKELY_OR_CONST’
+  431 |   if (C10_UNLIKELY_OR_CONST(!(cond))) {                                          \
+      |       ^~~~~~~~~~~~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/c10/util/Exception.h:862:32: note: in expansion of macro ‘TORCH_INTERNAL_ASSERT’
+  862 |     C10_EXPAND_MSVC_WORKAROUND(TORCH_INTERNAL_ASSERT(cond, __VA_ARGS__)); \
+      |                                ^~~~~~~~~~~~~~~~~~~~~
+./csrc/interp_same_size.cpp:23:23: note: in expansion of macro ‘AT_ASSERTM’
+   23 | #define CHECK_CUDA(x) AT_ASSERTM(x.type().is_cuda(), #x " must be a CUDA tensor")
+      |                       ^~~~~~~~~~
+./csrc/interp_same_size.cpp:25:24: note: in expansion of macro ‘CHECK_CUDA’
+   25 | #define CHECK_INPUT(x) CHECK_CUDA(x); CHECK_CONTIGUOUS(x)
+      |                        ^~~~~~~~~~
+./csrc/interp_same_size.cpp:50:3: note: in expansion of macro ‘CHECK_INPUT’
+   50 |   CHECK_INPUT(output);
+      |   ^~~~~~~~~~~
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:231:30: note: declared here
+  231 |   DeprecatedTypeProperties & type() const {
+      |                              ^~~~
+./csrc/interp_same_size_kernel.cu: In lambda function:
+./csrc/interp_same_size_kernel.cu:103:778: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = double; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, double, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, double, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:103:887: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = double; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, double, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, double, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:103:999: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = int; long unsigned int N = 1; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, int, 0, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<1, long unsigned int>, int, 1, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:103:1115: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = double; long unsigned int N = 1; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, double, 0, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<1, long unsigned int>, double, 1, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu: In lambda function:
+./csrc/interp_same_size_kernel.cu:103:2049: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = float; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, float, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, float, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:103:2157: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = float; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, float, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, float, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:103:2269: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = int; long unsigned int N = 1; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, int, 0, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<1, long unsigned int>, int, 1, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:103:2384: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = float; long unsigned int N = 1; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, float, 0, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<1, long unsigned int>, float, 1, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  103 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu: In lambda function:
+./csrc/interp_same_size_kernel.cu:137:778: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = double; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, double, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, double, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  137 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:137:887: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = double; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, double, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, double, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  137 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu: In lambda function:
+./csrc/interp_same_size_kernel.cu:137:1819: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = float; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, float, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, float, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  137 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~
+./csrc/interp_same_size_kernel.cu:137:1927: warning: ‘at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> at::Tensor::packed_accessor() const & [with T = float; long unsigned int N = 4; PtrTraits = torch::headeronly::RestrictPtrTraits; index_t = long unsigned int; at::GenericPackedTensorAccessor<T, N, PtrTraits, index_t> = torch::headeronly::detail::GenericPackedTensorAccessor<torch::headeronly::detail::TensorAccessor<c10::ArrayRef<long int>, float, 3, torch::headeronly::RestrictPtrTraits, long unsigned int>, at::detail::IndexBoundsCheck<4, long unsigned int>, float, 4, torch::headeronly::RestrictPtrTraits, long unsigned int>]’ is deprecated: packed_accessor is deprecated, use packed_accessor32 or packed_accessor64 instead [-Wdeprecated-declarations]
+  137 |     AT_DISPATCH_FLOATING_TYPES(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^ 
+/usr/local/lib/python3.13/dist-packages/torch/include/ATen/core/TensorBody.h:262:1: note: declared here
+  262 |   GenericPackedTensorAccessor<T,N,PtrTraits,index_t> packed_accessor() const & {
+      | ^ ~~~~~~~~~~~~~

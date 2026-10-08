@@ -1,0 +1,10 @@
+{
+    "net_type": "all_harm",
+    "learning_rate": 0.01,
+    "epochs": 5000,
+    "activation_function": "LeakyReLU",
+    "input_depth": 2,
+    "input_noise": "uniform",
+    "noise": 0,
+    "reg_noise": true
+}

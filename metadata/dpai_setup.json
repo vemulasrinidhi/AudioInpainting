@@ -1,0 +1,43 @@
+{
+ "dpai_repo": "https://github.com/fmiotello/dpai",
+ "commit": "75074c9022e818685d3ae9bbfac894e30b9e368a",
+ "n_params": 2015252,
+ "kernel_selftest_max_diff": 2.384185791015625e-07,
+ "nvcc": "Build cuda_13.0.r13.0/compiler.36424714_0",
+ "leakage_checks": {
+  "static": {
+   "loss_on_observed_only": true,
+   "only_training_loss_backpropagated": true,
+   "network_input_is_noise": true
+  },
+  "dynamic": {
+   "loss_identical": true,
+   "gradients_close": true,
+   "max_gradient_difference": 3.6135315895080566e-07,
+   "tampered_differs_in_gaps": true
+  }
+ },
+ "patches": [
+  {
+   "file": "src/script.py",
+   "old": "        mask = np.ones(X_a.shape)\n        mask[:,20:25] = 0\n        mask[:,50:55] = 0\n        mask[:,100:105] = 0\n        mask[:,120:125] = 0\n        mask[:,150:155] = 0\n",
+   "new": "        mask = np.ones(X_a.shape)\n        if os.environ.get('DPAI_MASK_FILE'):  # [baseline harness P2] paper-protocol mask generated and saved beforehand\n            mask = np.load(os.environ['DPAI_MASK_FILE']).astype(np.float64)\n            assert mask.shape == X_a.shape, ('mask shape', mask.shape, 'spectrogram shape', X_a.shape)\n            assert set(np.unique(mask)) <= {0.0, 1.0} and (mask == 0).any() and (mask == 1).any(), 'invalid mask'\n        else:  # original hard-coded demo mask (unchanged)\n            mask[:,20:25] = 0\n            mask[:,50:55] = 0\n            mask[:,100:105] = 0\n            mask[:,120:125] = 0\n            mask[:,150:155] = 0\n",
+   "occurrences": 1,
+   "reason": "P2 (experiment harness): if the environment variable DPAI_MASK_FILE is set, the frame mask is loaded from that .npy file (generated beforehand with the paper's gap protocol and saved for reproducibility) instead of the hard-coded demo mask. Without the variable the script behaves exactly as before. The mask is used in exactly the same way (X*mask in the loss); network, loss, optimiser and reconstruction are untouched."
+  },
+  {
+   "file": "src/script.py",
+   "old": "        out_np = net(net_input).detach().cpu().numpy()[0]\n",
+   "new": "        out_np = net(net_input).detach().cpu().numpy()[0]\n        np.save(inner_path + '/output_spectrogram.npy', out_np)  # [baseline harness P3] save the final network output\n",
+   "occurrences": 1,
+   "reason": "P3 (output only): saves the final network output spectrogram (the same array the script already converts to audio) so the evaluation can resynthesise it on the original 80,000-sample time axis. No effect on the model or its optimisation."
+  },
+  {
+   "file": "src/script.py",
+   "old": "librosa.display.waveplot(",
+   "new": "librosa.display.waveshow(",
+   "occurrences": 3,
+   "reason": "librosa.display.waveplot was removed in librosa 0.10; waveshow is its replacement. Only affects the three waveform PNGs the script saves; no effect on the model, loss, optimisation or reconstruction."
+  }
+ ]
+}

@@ -1,0 +1,55 @@
+--- original/src/script.py
++++ working_copy/src/script.py
+@@ -184,11 +184,16 @@
+         # mask = np.tile(mask, (X.shape[0], 1))
+ 
+         mask = np.ones(X_a.shape)
+-        mask[:,20:25] = 0
+-        mask[:,50:55] = 0
+-        mask[:,100:105] = 0
+-        mask[:,120:125] = 0
+-        mask[:,150:155] = 0
++        if os.environ.get('DPAI_MASK_FILE'):  # [baseline harness P2] paper-protocol mask generated and saved beforehand
++            mask = np.load(os.environ['DPAI_MASK_FILE']).astype(np.float64)
++            assert mask.shape == X_a.shape, ('mask shape', mask.shape, 'spectrogram shape', X_a.shape)
++            assert set(np.unique(mask)) <= {0.0, 1.0} and (mask == 0).any() and (mask == 1).any(), 'invalid mask'
++        else:  # original hard-coded demo mask (unchanged)
++            mask[:,20:25] = 0
++            mask[:,50:55] = 0
++            mask[:,100:105] = 0
++            mask[:,120:125] = 0
++            mask[:,150:155] = 0
+ 
+         mask_np = np.stack((mask, mask))
+         mask_tensor = torch.from_numpy(mask_np)[None, :].type(dtype).to(device)
+--- original/src/script.py
++++ working_copy/src/script.py
+@@ -440,6 +440,7 @@
+         # else:
+ 
+         out_np = net(net_input).detach().cpu().numpy()[0]
++        np.save(inner_path + '/output_spectrogram.npy', out_np)  # [baseline harness P3] save the final network output
+ 
+         original_spectrogram = X_a + 1j*X_b
+         original_audio = librosa.istft(original_spectrogram)
+--- original/src/script.py
++++ working_copy/src/script.py
+@@ -466,15 +466,15 @@
+         nmse_audio_masked_part_with_original_context = nmse(original_audio, librosa.istft(reconstructed_spectrogram_with_original_context))
+ 
+         plt.figure(figsize=(14,5))
+-        librosa.display.waveplot(original_audio, sr=sr)
++        librosa.display.waveshow(original_audio, sr=sr)
+         plt.savefig(inner_path + '/waveform_original.png')
+ 
+         plt.figure(figsize=(14,5))
+-        librosa.display.waveplot(original_audio_masked, sr=sr)
++        librosa.display.waveshow(original_audio_masked, sr=sr)
+         plt.savefig(inner_path + '/waveform_original_masked.png')
+ 
+         plt.figure(figsize=(14,5))
+-        librosa.display.waveplot(reconstructed_audio, sr=sr)
++        librosa.display.waveshow(reconstructed_audio, sr=sr)
+         plt.savefig(inner_path + '/waveform_reconstructed.png')
+ 
+         original_mag, _ = librosa.magphase(X)
